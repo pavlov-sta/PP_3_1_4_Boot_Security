@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="RU">
+
+<header th:fragment="header">
+        <a sec:authorize="!isAuthenticated()" href="/login" class="btn btn-primary"  role="button">Login</a>
+        <a sec:authorize="isAuthenticated()" href="/user" class="btn btn-primary"  role="button">User</a>
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+          <a href="/logout" class="btn btn-primary"  role="button">Logout</a>
+        </form>
+        <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin" class="btn btn-primary"  role="button">Admin</a>
+</header>
