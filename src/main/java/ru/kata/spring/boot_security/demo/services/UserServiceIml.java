@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -16,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class UserServiceIml implements UserService {
 
     private final UserRepository userRepository;
@@ -32,6 +32,7 @@ public class UserServiceIml implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         if (user == null) {
@@ -46,7 +47,11 @@ public class UserServiceIml implements UserService {
     }
 
     @Override
+    @Transactional
     public void add(User user) {
+        if (user.getPassword() != null) {
+            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        }
         userRepository.save(user);
     }
 
@@ -61,11 +66,13 @@ public class UserServiceIml implements UserService {
     }
 
     @Override
+    @Transactional
     public void removeUser(int id) {
         userRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         userRepository.save(user);
     }

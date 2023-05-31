@@ -9,6 +9,7 @@
 </head>
 <body>
 <head th:replace="blocks/header.html :: header"></head>
+<h2>User welcome</h2>
 <table class="table">
     <thead>
     <tr>
@@ -25,7 +26,7 @@
         <td th:utext="${user.getEmail()}"></td>
         <td th:utext="${user.getRoles()}"></td>
         <td>
-            <a th:href="@{lk/user/edit}">Edit</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{lk/user/edit}">Edit</a>
         </td>
     </tr>
     </tbody>

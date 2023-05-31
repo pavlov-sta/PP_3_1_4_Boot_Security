@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -36,53 +35,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-                .loginProcessingUrl("/process_login")
+
+                .loginProcessingUrl("/authenticateTheUser")
                 .successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/");
     }
-
-//    @Bean
-//    public UserDetailsService users(){
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("{bcrypt}$2a$12$8uBH9zuo9bg0X0n7mpIxu.8FlnsBhU2EuGaau1LSQp4mSxIp4b9ju")
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("{bcrypt}$2a$12$8uBH9zuo9bg0X0n7mpIxu.8FlnsBhU2EuGaau1LSQp4mSxIp4b9ju")
-//                .roles("ADMIN", "USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user,admin);
-//    }
-
-//    @Bean
-//    public JdbcUserDetailsManager users(DataSource dataSource) {
-//
-//        UserDetails user = User.builder()
-//                .username("user")
-//                .password("{bcrypt}$2a$12$8uBH9zuo9bg0X0n7mpIxu.8FlnsBhU2EuGaau1LSQp4mSxIp4b9ju")
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("{bcrypt}$2a$12$8uBH9zuo9bg0X0n7mpIxu.8FlnsBhU2EuGaau1LSQp4mSxIp4b9ju")
-//                .roles("ADMIN", "USER")
-//                .build();
-//        JdbcUserDetailsManager usersJdbc = new JdbcUserDetailsManager(dataSource);
-//        if (usersJdbc.userExists(user.getUsername())) {
-//            usersJdbc.deleteUser(user.getUsername());
-//        }
-//        if (usersJdbc.userExists(admin.getUsername())) {
-//            usersJdbc.deleteUser(admin.getUsername());
-//        }
-//        usersJdbc.createUser(user);
-//        usersJdbc.createUser(admin);
-//        return usersJdbc;
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
