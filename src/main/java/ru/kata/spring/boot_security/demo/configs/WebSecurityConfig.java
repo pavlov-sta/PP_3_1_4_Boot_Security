@@ -35,13 +35,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()
-
+                .loginPage("/login")
                 .loginProcessingUrl("/authenticateTheUser")
                 .successHandler(successUserHandler)
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login")
+                .permitAll();
     }
 
     @Bean

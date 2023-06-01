@@ -26,14 +26,14 @@ public class AdminController {
     @GetMapping()
     public String adminIndex(ModelMap model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "admin";
+        return "admin/admin";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(ModelMap model, @PathVariable("id") int id) {
         model.addAttribute("roles", roleService.getAllRoles());
         model.addAttribute("user", userService.getUser(id));
-        return "edit";
+        return "admin/edit";
     }
 
     @PostMapping("/{id}")
@@ -51,7 +51,7 @@ public class AdminController {
     public String newUser(@ModelAttribute("user") User guser, ModelMap model) {
         System.out.println("Helll");
         model.addAttribute("roles", roleService.getAllRoles());
-        return "new";
+        return "admin/new";
     }
 
     @PostMapping("/new")

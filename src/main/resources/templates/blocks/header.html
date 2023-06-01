@@ -6,8 +6,8 @@
 <header th:fragment="header">
     <a sec:authorize="!isAuthenticated()" href="/login" class="btn btn-primary" role="button" style="margin: 10px">Login</a>
     <a sec:authorize="isAuthenticated()" href="/user" class="btn btn-primary" role="button" style="margin: 10px">User</a>
-    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="margin: 10px">
-        <a href="/logout" class="btn btn-primary" role="button">Logout</a>
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+        <a href="#" class="logout"><input type="submit" value="Logout"/></a>
     </form>
     <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin" class="btn btn-primary" role="button" style="margin: 10px">Admin</a>
 </header>

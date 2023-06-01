@@ -23,6 +23,6 @@ public class HomeLkController {
     public String userPage(ModelMap model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("user", user);
-        return "user";
+        return "lk/user";
     }
 }
