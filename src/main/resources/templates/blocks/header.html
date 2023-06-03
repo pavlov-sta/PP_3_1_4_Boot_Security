@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.w3.org/1999/xhtml" lang="RU">
-
 <header th:fragment="header">
-    <a sec:authorize="!isAuthenticated()" href="/login" class="btn btn-primary" role="button" style="margin: 10px">Login</a>
-    <a sec:authorize="isAuthenticated()" href="/user" class="btn btn-primary" role="button" style="margin: 10px">User</a>
-    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
-        <a href="#" class="logout"><input type="submit" value="Logout"/></a>
-    </form>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" href="/admin" class="btn btn-primary" role="button" style="margin: 10px">Admin</a>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+            <div class="container-fluid">
+                <div>
+                    <span class="fw-bold" th:text="${authUser.getEmail()}"></span>
+                    <span> with roles: </span>
+                    <th:block th:each="role : *{authUser.getRoles()}">
+                        &nbsp;<span th:text="${role.toString()}"/>
+                    </th:block>
+                </div>
+                <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">
+                    <a href="#" ><input class="btn btn-dark" type="submit" value="Logout"/></a>
+                </form>
+            </div>
+        </nav>
+    </div>
 </header>

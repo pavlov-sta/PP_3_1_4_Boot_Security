@@ -1,8 +1,5 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.persistence.*;
 
 @Entity

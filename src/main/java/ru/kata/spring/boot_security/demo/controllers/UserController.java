@@ -11,18 +11,18 @@ import java.security.Principal;
 
 @Controller
 
-public class HomeLkController {
+public class UserController {
     private final UserService userService;
 
     @Autowired
-    public HomeLkController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/user")
     public String userPage(ModelMap model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", user);
+        User user = userService.findByLogin(principal.getName());
+        model.addAttribute("authUser", user);
         return "lk/user";
     }
 }

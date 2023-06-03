@@ -9,6 +9,7 @@ import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -24,16 +25,13 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String adminIndex(ModelMap model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "admin/admin";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String edit(ModelMap model, @PathVariable("id") int id) {
+    public String adminIndex(ModelMap model, Principal principal) {
+        User user = userService.findByLogin(principal.getName());
+        model.addAttribute("authUser", user);
         model.addAttribute("roles", roleService.getAllRoles());
-        model.addAttribute("user", userService.getUser(id));
-        return "admin/edit";
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("modelUser", new User());
+        return "admin/admin";
     }
 
     @PostMapping("/{id}")
@@ -45,13 +43,6 @@ public class AdminController {
         }
         userService.updateUser(user);
         return "redirect:/admin";
-    }
-
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User guser, ModelMap model) {
-        System.out.println("Helll");
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "admin/new";
     }
 
     @PostMapping("/new")
@@ -70,7 +61,5 @@ public class AdminController {
         userService.removeUser(id);
         return "redirect:/admin";
     }
-
-
 }
 
