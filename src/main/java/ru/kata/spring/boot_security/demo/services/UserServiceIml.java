@@ -20,10 +20,12 @@ import java.util.Set;
 public class UserServiceIml implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleService roleService;
 
     @Autowired
-    public UserServiceIml(UserRepository userRepository) {
+    public UserServiceIml(UserRepository userRepository, RoleService roleService) {
         this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
     @Override
@@ -61,22 +63,18 @@ public class UserServiceIml implements UserService {
     }
 
     @Override
-    public User getUser(int id) {
-        return userRepository.findAllById(id);
-    }
-
-    @Override
     @Transactional
     public void removeUser(int id) {
         userRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
-    public void updateUser(User user) {
-        if (user.getPassword() != null) {
-            user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    public void addRoleUser(User user, String role) {
+        if (role.contains("ROLE_ADMIN")) {
+            user.addRole(roleService.getByRole("ROLE_ADMIN"));
+        } else if (role.contains("ROLE_USER")) {
+            user.addRole(roleService.getByRole("ROLE_USER"));
         }
-        userRepository.save(user);
+        add(user);
     }
 }

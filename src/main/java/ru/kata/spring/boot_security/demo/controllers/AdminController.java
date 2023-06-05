@@ -36,23 +36,13 @@ public class AdminController {
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("user") @Valid User user, @RequestParam("role") String role) {
-        if (role.contains("ROLE_ADMIN")) {
-            user.addRole(roleService.getByRole("ROLE_ADMIN"));
-        } else if (role.contains("ROLE_USER")) {
-            user.addRole(roleService.getByRole("ROLE_USER"));
-        }
-        userService.updateUser(user);
+        userService.addRoleUser(user, role);
         return "redirect:/admin";
     }
 
     @PostMapping("/new")
     public String create(@ModelAttribute("user") @Valid User user, @RequestParam("role") String role) {
-        if (role.contains("ROLE_ADMIN")) {
-            user.addRole(roleService.getByRole("ROLE_ADMIN"));
-        } else if (role.contains("ROLE_USER")) {
-            user.addRole(roleService.getByRole("ROLE_USER"));
-        }
-        userService.add(user);
+        userService.addRoleUser(user, role);
         return "redirect:/admin";
     }
 

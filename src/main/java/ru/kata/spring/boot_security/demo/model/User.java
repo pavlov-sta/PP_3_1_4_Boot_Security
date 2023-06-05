@@ -21,9 +21,8 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "age")
     private Byte age;
-    @Column(name = "email")
+
     private String email;
 
     @ManyToMany
